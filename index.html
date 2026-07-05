@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lemoyne Deliverance Court Calendar – Anno Domini 1899</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  /* ===== GENERAL ===== */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Georgia", "Times New Roman", serif;
+    background: #f3e7cf;
+    color: #2b1b12;
+  }
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 12px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    text-align: center;
+    padding: 12px 0;
+    border-bottom: 2px solid #5c3a24;
+  }
+  .court-title {
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .court-subtitle {
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+  .seal {
+    margin: 8px auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #5c3a24;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    background: radial-gradient(circle, #fdf5e6 0%, #e4cfaa 70%);
+  }
+
+  /* ===== CONTROLS ===== */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 6px;
+    gap: 6px;
+  }
+  .controls-left, .controls-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  button {
+    font-family: inherit;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border: 1px solid #5c3a24;
+    background: #fdf5e6;
+    color: #2b1b12;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #e4cfaa;
+  }
+  select {
+    font-family: inherit;
+    font-size: 0.8rem;
+    padding: 3px 6px;
+    border: 1px solid #5c3a24;
+    background: #fdf5e6;
+    color: #2b1b12;
+  }
+
+  .term-banner {
+    text-align: center;
+    font-size: 0.85rem;
+    margin: 4px 0 8px;
+    font-style: italic;
+  }
+
+  /* ===== CALENDAR GRID ===== */
+  .calendar {
+    border: 2px solid #5c3a24;
+    background: #fdf5e6;
+    box-shadow: 0 0 0 4px #d3b58a;
+  }
+  .calendar-header-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-bottom: 1px solid #5c3a24;
+    background: #e4cfaa;
+  }
+  .calendar-header-cell {
+    padding: 6px 2px;
+    text-align: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .day-cell {
+    min-height: 70px;
+    border-right: 1px solid #d3b58a;
+    border-bottom: 1px solid #d3b58a;
+    padding: 4px;
+    box-sizing: border-box;
+    position: relative;
+    font-size: 0.75rem;
+  }
+  .day-cell:nth-child(7n) {
+    border-right: none;
+  }
+  .day-number {
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .day-meta {
+    font-size: 0.65rem;
+    color: #6b4a32;
+  }
+  .event-pill {
+    margin-top: 3px;
+    padding: 2px 3px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    cursor: pointer;
+    border: 1px solid #5c3a24;
+    background: #f3e7cf;
+  }
+  .event-pill.criminal { border-color: #8b0000; color: #8b0000; }
+  .event-pill.civil    { border-color: #004b8b; color: #004b8b; }
+  .event-pill.investigatory { border-color: #2f6b32; color: #2f6b32; }
+
+  .empty {
+    background: #f8f0dd;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 10px;
+    font-size: 0.7rem;
+    text-align: center;
+    color: #6b4a32;
+  }
+
+  /* ===== MODAL (EVENT CARD) ===== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  .modal {
+    max-width: 480px;
+    width: 90%;
+    background: #fdf5e6;
+    border: 2px solid #5c3a24;
+    box-shadow: 0 0 0 4px #d3b58a;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+  .modal-header {
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .modal-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+  }
+  .modal-section-title {
+    font-weight: bold;
+    margin-top: 6px;
+  }
+  .modal-close {
+    text-align: right;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="court-title">The Lemoyne Deliverance Court Calendar</div>
+    <div class="court-subtitle">City of St. Denis, State of Lemoyne – Anno Domini 1899</div>
+    <div class="seal">
+      LEX<br>LEMoyNE<br>1899
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="controls-left">
+      <button id="prevMonthBtn">&laquo; Prior Month</button>
+      <button id="nextMonthBtn">Next Month &raquo;</button>
+    </div>
+    <div class="controls-right">
+      <label for="monthSelect">Month:</label>
+      <select id="monthSelect"></select>
+    </div>
+  </div>
+
+  <div class="term-banner" id="termBanner"></div>
+
+  <!-- CALENDAR -->
+  <div class="calendar">
+    <div class="calendar-header-row">
+      <div class="calendar-header-cell">Sunday</div>
+      <div class="calendar-header-cell">Monday</div>
+      <div class="calendar-header-cell">Tuesday</div>
+      <div class="calendar-header-cell">Wednesday</div>
+      <div class="calendar-header-cell">Thursday</div>
+      <div class="calendar-header-cell">Friday</div>
+      <div class="calendar-header-cell">Saturday</div>
+    </div>
+    <div class="calendar-body" id="calendarBody"></div>
+  </div>
+
+  <div class="footer">
+    All dates observed according to the Common Calendar, year styled as 1899 for the purposes of Lemoyne jurisprudence.
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">In the Matter of <span id="modalCaseName"></span></div>
+      <div><span id="modalDate"></span></div>
+    </div>
+    <div>
+      <div class="modal-section-title">Location</div>
+      <div id="modalLocation"></div>
+
+      <div class="modal-section-title">Cause(s) of Action</div>
+      <div id="modalCauses"></div>
+
+      <div class="modal-section-title">Presiding Officer</div>
+      <div id="modalJudge"></div>
+
+      <div class="modal-section-title">Required Papers</div>
+      <div id="modalPapers"></div>
+
+      <div class="modal-section-title">Notes</div>
+      <div id="modalNotes"></div>
+    </div>
+    <div class="modal-close">
+      <button id="modalCloseBtn">Close Docket Card</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== CONFIG: TERMS & SAMPLE EVENTS =====
+  const terms = [
+    { months: [0,1,2], name: "Hilary Term – First Sitting of the Deliverance Bench" },
+    { months: [3,4,5], name: "Easter Term – Spring Assizes of Lemoyne" },
+    { months: [6,7,8], name: "Trinity Term – Summer Assizes of St. Denis" },
+    { months: [9,10,11], name: "Michaelmas Term – Winter Assizes and Final Sentencings" }
+  ];
+
+  // Example events – you can expand this as needed
+  // key: "month-day" (month 0–11, day 1–31)
+  const events = {
+    "0-5": [{
+      type: "criminal",
+      caseName: "The State of Lemoyne v. John Marston",
+      location: "Deliverance Court, City of St. Denis, Lemoyne",
+      causes: [
+        "P.C. 308 – Armed Robbery of a Conveyance",
+        "P.C. 410 – Discharge of Firearms within City Limits"
+      ],
+      judge: "Hon. Silas Beauregard, Judge of the Deliverance Court",
+      papers: [
+        "Motion to Continue",
+        "Affidavit of Deputy Witness",
+        "Writ of Production of the Accused"
+      ],
+      notes: "Arraignment and setting of trial date; clerk to notify attorney of record."
+    }],
+    "0-12": [{
+      type: "civil",
+      caseName: "Van der Linde v. Cornwall Freight & Shipping",
+      location: "Deliverance Court, City of St. Denis, Lemoyne",
+      causes: [
+        "Civil Trespass upon Rail Property",
+        "Conversion of Goods and Chattels"
+      ],
+      judge: "Hon. Abigail Monroe, Judge of the Deliverance Court",
+      papers: [
+        "Bill of Complaint",
+        "Affidavit of Damages",
+        "Summons to Cornwall Freight & Shipping"
+      ],
+      notes: "Initial filing; clerk to assign docket number and serve summons."
+    }],
+    "1-3": [{
+      type: "investigatory",
+      caseName: "In re Investigation of Rhodes Jail Disturbance",
+      location: "Office of the County Solicitor, Rhodes, Lemoyne",
+      causes: [
+        "P.C. 309 – Disturbance of the Peace",
+        "P.C. 411 – Destruction of Public Property"
+      ],
+      judge: "County Solicitor’s Office (Preliminary Inquiry)",
+      papers: [
+        "Report of Deputy Sheriff",
+        "Statement of Jailor",
+        "Inventory of Damaged Property"
+      ],
+      notes: "Preliminary investigatory session; no formal charges yet preferred."
+    }]
+  };
+
+  // ===== STATE =====
+  let currentMonth = (new Date()).getMonth(); // align with real month
+  const calendarBody = document.getElementById("calendarBody");
+  const monthSelect = document.getElementById("monthSelect");
+  const termBanner = document.getElementById("termBanner");
+
+  // ===== INIT MONTH SELECT =====
+  const monthNames = [
+    "January 1899", "February 1899", "March 1899", "April 1899",
+    "May 1899", "June 1899", "July 1899", "August 1899",
+    "September 1899", "October 1899", "November 1899", "December 1899"
+  ];
+  monthNames.forEach((name, idx) => {
+    const opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = name;
+    monthSelect.appendChild(opt);
+  });
+
+  // ===== RENDER TERM BANNER =====
+  function renderTermBanner(month) {
+    const term = terms.find(t => t.months.includes(month));
+    termBanner.textContent = term ? term.name : "";
+  }
+
+  // ===== RENDER CALENDAR =====
+  function renderCalendar(month) {
+    calendarBody.innerHTML = "";
+    monthSelect.value = month;
+    renderTermBanner(month);
+
+    const year = 1899; // styled year
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Leading empty cells
+    for (let i = 0; i < firstDay; i++) {
+      const cell = document.createElement("div");
+      cell.className = "day-cell empty";
+      calendarBody.appendChild(cell);
+    }
+
+    // Day cells
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cell = document.createElement("div");
+      cell.className = "day-cell";
+
+      const num = document.createElement("div");
+      num.className = "day-number";
+      num.textContent = day;
+      cell.appendChild(num);
+
+      const meta = document.createElement("div");
+      meta.className = "day-meta";
+      meta.textContent = `The ${ordinal(day)} Day of ${monthNames[month].split(" ")[0]}, Anno Domini 1899`;
+      cell.appendChild(meta);
+
+      const key = `${month}-${day}`;
+      if (events[key]) {
+        events[key].forEach(ev => {
+          const pill = document.createElement("div");
+          pill.className = `event-pill ${ev.type}`;
+          pill.textContent = ev.caseName;
+          pill.addEventListener("click", () => openModal(ev, day, month));
+          cell.appendChild(pill);
+        });
+      }
+
+      calendarBody.appendChild(cell);
+    }
+  }
+
+  function ordinal(n) {
+    const s = ["th","st","nd","rd"], v = n % 100;
+    return n + (s[(v-20)%10] || s[v] || s[0]);
+  }
+
+  // ===== MODAL LOGIC =====
+  const modalBackdrop = document.getElementById("modalBackdrop");
+  const modalCloseBtn = document.getElementById("modalCloseBtn");
+  const modalCaseName = document.getElementById("modalCaseName");
+  const modalDate = document.getElementById("modalDate");
+  const modalLocation = document.getElementById("modalLocation");
+  const modalCauses = document.getElementById("modalCauses");
+  const modalJudge = document.getElementById("modalJudge");
+  const modalPapers = document.getElementById("modalPapers");
+  const modalNotes = document.getElementById("modalNotes");
+
+  function openModal(ev, day, month) {
+    modalCaseName.textContent = ev.caseName;
+    modalDate.textContent = `The ${ordinal(day)} Day of ${monthNames[month].split(" ")[0]}, Anno Domini 1899`;
+    modalLocation.textContent = ev.location;
+    modalCauses.innerHTML = ev.causes.map(c => `• ${c}`).join("<br>");
+    modalJudge.textContent = ev.judge;
+    modalPapers.innerHTML = ev.papers.map(p => `• ${p}`).join("<br>");
+    modalNotes.textContent = ev.notes;
+    modalBackdrop.style.display = "flex";
+  }
+
+  function closeModal() {
+    modalBackdrop.style.display = "none";
+  }
+
+  modalCloseBtn.addEventListener("click", closeModal);
+  modalBackdrop.addEventListener("click", (e) => {
+    if (e.target === modalBackdrop) closeModal();
+  });
+
+  // ===== CONTROLS =====
+  document.getElementById("prevMonthBtn").addEventListener("click", () => {
+    currentMonth = (currentMonth + 11) % 12;
+    renderCalendar(currentMonth);
+  });
+  document.getElementById("nextMonthBtn").addEventListener("click", () => {
+    currentMonth = (currentMonth + 1) % 12;
+    renderCalendar(currentMonth);
+  });
+  monthSelect.addEventListener("change", (e) => {
+    currentMonth = parseInt(e.target.value, 10);
+    renderCalendar(currentMonth);
+  });
+
+  // ===== INITIAL RENDER =====
+  renderCalendar(currentMonth);
+</script>
+</body>
+</html>
