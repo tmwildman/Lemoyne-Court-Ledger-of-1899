@@ -5,159 +5,38 @@
 <title>Lemoyne Deliverance Court Calendar – Anno Domini 1899</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: "Georgia", serif;
-    background: #f3e7cf;
-    color: #2b1b12;
-  }
-  .page {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 8px;
-  }
-  .header {
-    text-align: center;
-    padding: 8px 0;
-    border-bottom: 2px solid #5c3a24;
-  }
-  .court-title {
-    font-size: 1.2rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .court-subtitle {
-    font-size: 0.85rem;
-    margin-top: 4px;
-  }
-  .seal {
-    margin: 6px auto;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid #5c3a24;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.65rem;
-    background: radial-gradient(circle, #fdf5e6 0%, #e4cfaa 70%);
-    text-align: center;
-    line-height: 1.1;
-  }
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 8px 0;
-  }
-  button, select {
-    font-family: inherit;
-    font-size: 0.8rem;
-    padding: 4px 8px;
-    border: 1px solid #5c3a24;
-    background: #fdf5e6;
-    color: #2b1b12;
-  }
-  .term-banner {
-    text-align: center;
-    font-size: 0.8rem;
-    margin: 4px 0 8px;
-    font-style: italic;
-  }
-  .calendar-wrapper {
-    width: 100%;
-    overflow-x: auto;
-  }
-  .calendar {
-    min-width: 600px;
-    border: 2px solid #5c3a24;
-    background: #fdf5e6;
-    box-shadow: 0 0 0 3px #d3b58a;
-  }
-  .calendar-header-row {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    background: #e4cfaa;
-  }
-  .calendar-header-cell {
-    padding: 4px;
-    text-align: center;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-  }
-  .calendar-body {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-  }
-  .day-cell {
-    min-height: 70px;
-    border-right: 1px solid #d3b58a;
-    border-bottom: 1px solid #d3b58a;
-    padding: 3px;
-    font-size: 0.7rem;
-  }
-  .day-cell:nth-child(7n) {
-    border-right: none;
-  }
-  .day-number {
-    font-weight: bold;
-  }
-  .day-meta {
-    font-size: 0.6rem;
-    color: #6b4a32;
-  }
-  .event-pill {
-    margin-top: 3px;
-    padding: 2px 3px;
-    border-radius: 3px;
-    font-size: 0.6rem;
-    border: 1px solid #5c3a24;
-    background: #f3e7cf;
-    cursor: pointer;
-  }
-  .event-pill.criminal { color: #8b0000; border-color: #8b0000; }
-  .event-pill.civil { color: #004b8b; border-color: #004b8b; }
-  .event-pill.investigatory { color: #2f6b32; border-color: #2f6b32; }
-  .event-form {
-    margin-top: 10px;
-    padding: 8px;
-    border: 2px solid #5c3a24;
-    background: #fdf5e6;
-    box-shadow: 0 0 0 3px #d3b58a;
-  }
-  .event-form-title {
-    font-weight: bold;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-  .event-form-row {
-    margin-bottom: 6px;
-  }
-  textarea, input, select {
-    width: 100%;
-    font-family: inherit;
-    font-size: 0.75rem;
-    padding: 3px;
-    border: 1px solid #5c3a24;
-    background: #fdf5e6;
-  }
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
-  .modal {
-    max-width: 480px;
-    width: 90%;
-    background: #fdf5e6;
-    border: 2px solid #5c3a24;
-    box-shadow: 0 0 0 3px #d3b58a;
-    padding: 8px;
-  }
+  body { margin:0; padding:0; font-family:"Georgia",serif; background:#f3e7cf; color:#2b1b12; }
+  .page { max-width:960px; margin:0 auto; padding:8px; }
+  .header { text-align:center; padding:8px 0; border-bottom:2px solid #5c3a24; }
+  .court-title { font-size:1.2rem; text-transform:uppercase; letter-spacing:0.08em; }
+  .court-subtitle { font-size:0.85rem; margin-top:4px; }
+  .seal { margin:6px auto; width:70px; height:70px; border-radius:50%; border:2px solid #5c3a24;
+          display:flex; align-items:center; justify-content:center; background:radial-gradient(circle,#fdf5e6,#e4cfaa);
+          font-size:0.65rem; text-align:center; line-height:1.1; }
+  .controls { display:flex; flex-wrap:wrap; justify-content:space-between; margin:8px 0; }
+  button, select { font-family:inherit; font-size:0.8rem; padding:4px 8px; border:1px solid #5c3a24;
+                   background:#fdf5e6; color:#2b1b12; }
+  .term-banner { text-align:center; font-size:0.8rem; margin:4px 0 8px; font-style:italic; }
+  .calendar-wrapper { width:100%; overflow-x:auto; }
+  .calendar { min-width:600px; border:2px solid #5c3a24; background:#fdf5e6; box-shadow:0 0 0 3px #d3b58a; }
+  .calendar-header-row { display:grid; grid-template-columns:repeat(7,1fr); background:#e4cfaa; }
+  .calendar-header-cell { padding:4px; text-align:center; font-size:0.7rem; text-transform:uppercase; }
+  .calendar-body { display:grid; grid-template-columns:repeat(7,1fr); }
+  .day-cell { min-height:70px; border-right:1px solid #d3b58a; border-bottom:1px solid #d3b58a; padding:3px; font-size:0.7rem; }
+  .day-cell:nth-child(7n) { border-right:none; }
+  .day-number { font-weight:bold; }
+  .day-meta { font-size:0.6rem; color:#6b4a32; }
+  .event-pill { margin-top:3px; padding:2px 3px; border-radius:3px; font-size:0.6rem; border:1px solid #5c3a24;
+                background:#f3e7cf; cursor:pointer; }
+  .event-pill.criminal { color:#8b0000; border-color:#8b0000; }
+  .event-pill.civil { color:#004b8b; border-color:#004b8b; }
+  .event-pill.investigatory { color:#2f6b32; border-color:#2f6b32; }
+  .event-form { margin-top:10px; padding:8px; border:2px solid #5c3a24; background:#fdf5e6; box-shadow:0 0 0 3px #d3b58a; }
+  .event-form-title { font-weight:bold; margin-bottom:6px; text-transform:uppercase; }
+  .event-form-row { margin-bottom:6px; }
+  textarea, input, select { width:100%; font-family:inherit; font-size:0.75rem; padding:3px; border:1px solid #5c3a24; background:#fdf5e6; }
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:none; align-items:center; justify-content:center; }
+  .modal { max-width:480px; width:90%; background:#fdf5e6; border:2px solid #5c3a24; box-shadow:0 0 0 3px #d3b58a; padding:8px; }
 </style>
 </head>
 <body>
@@ -195,42 +74,20 @@
   <div class="event-form">
     <div class="event-form-title">Clerk’s Entry of Court Event</div>
     <form id="eventForm">
-      <div class="event-form-row">
-        <label>Date (Day of Month):</label>
-        <input type="number" id="eventDay" min="1" max="31" required>
-      </div>
-      <div class="event-form-row">
-        <label>Type:</label>
+      <div class="event-form-row"><label>Date (Day of Month):</label><input type="number" id="eventDay" min="1" max="31" required></div>
+      <div class="event-form-row"><label>Type:</label>
         <select id="eventType">
           <option value="criminal">Criminal</option>
           <option value="civil">Civil</option>
           <option value="investigatory">Investigatory</option>
         </select>
       </div>
-      <div class="event-form-row">
-        <label>Case Name:</label>
-        <input type="text" id="eventCaseName" required>
-      </div>
-      <div class="event-form-row">
-        <label>Location:</label>
-        <input type="text" id="eventLocation" value="Deliverance Court, St. Denis">
-      </div>
-      <div class="event-form-row">
-        <label>Causes (one per line):</label>
-        <textarea id="eventCauses"></textarea>
-      </div>
-      <div class="event-form-row">
-        <label>Presiding Officer:</label>
-        <input type="text" id="eventJudge">
-      </div>
-      <div class="event-form-row">
-        <label>Required Papers (one per line):</label>
-        <textarea id="eventPapers"></textarea>
-      </div>
-      <div class="event-form-row">
-        <label>Notes:</label>
-        <textarea id="eventNotes"></textarea>
-      </div>
+      <div class="event-form-row"><label>Case Name:</label><input type="text" id="eventCaseName" required></div>
+      <div class="event-form-row"><label>Location:</label><input type="text" id="eventLocation" value="Deliverance Court, St. Denis"></div>
+      <div class="event-form-row"><label>Causes (one per line):</label><textarea id="eventCauses"></textarea></div>
+      <div class="event-form-row"><label>Presiding Officer:</label><input type="text" id="eventJudge"></div>
+      <div class="event-form-row"><label>Papers (one per line):</label><textarea id="eventPapers"></textarea></div>
+      <div class="event-form-row"><label>Notes:</label><textarea id="eventNotes"></textarea></div>
       <button type="submit">Enter Event</button>
     </form>
   </div>
@@ -254,19 +111,24 @@
 const realYear = new Date().getFullYear();
 const styledYear = 1899;
 
-const events = {};
+let events = JSON.parse(localStorage.getItem("lemoyneEvents") || "{}");
+
+function saveEvents() {
+  localStorage.setItem("lemoyneEvents", JSON.stringify(events));
+}
+
 let currentMonth = new Date().getMonth();
 
 const monthNames = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
 ];
 
 const terms = [
-  { months: [0,1,2], name: "Hilary Term – First Sitting" },
-  { months: [3,4,5], name: "Easter Term – Spring Assizes" },
-  { months: [6,7,8], name: "Trinity Term – Summer Assizes" },
-  { months: [9,10,11], name: "Michaelmas Term – Winter Assizes" }
+  { months:[0,1,2], name:"Hilary Term – First Sitting" },
+  { months:[3,4,5], name:"Easter Term – Spring Assizes" },
+  { months:[6,7,8], name:"Trinity Term – Summer Assizes" },
+  { months:[9,10,11], name:"Michaelmas Term – Winter Assizes" }
 ];
 
 const calendarBody = document.getElementById("calendarBody");
@@ -280,46 +142,46 @@ monthNames.forEach((name, idx) => {
   monthSelect.appendChild(opt);
 });
 
-function ordinal(n) {
-  const s = ["th","st","nd","rd"], v = n % 100;
-  return n + (s[(v-20)%10] || s[v] || s[0]);
+function ordinal(n){
+  const s=["th","st","nd","rd"],v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
 }
 
-function renderTermBanner(month) {
-  const term = terms.find(t => t.months.includes(month));
-  termBanner.textContent = term ? term.name : "";
+function renderTermBanner(month){
+  const term=terms.find(t=>t.months.includes(month));
+  termBanner.textContent=term?term.name:"";
 }
 
-function renderCalendar(month) {
-  calendarBody.innerHTML = "";
-  monthSelect.value = month;
+function renderCalendar(month){
+  calendarBody.innerHTML="";
+  monthSelect.value=month;
   renderTermBanner(month);
 
-  const firstDay = new Date(realYear, month, 1).getDay();
-  const daysInMonth = new Date(realYear, month + 1, 0).getDate();
+  const firstDay=new Date(realYear,month,1).getDay();
+  const daysInMonth=new Date(realYear,month+1,0).getDate();
 
-  for (let i = 0; i < firstDay; i++) {
-    const cell = document.createElement("div");
-    cell.className = "day-cell";
+  for(let i=0;i<firstDay;i++){
+    const cell=document.createElement("div");
+    cell.className="day-cell";
     calendarBody.appendChild(cell);
   }
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const cell = document.createElement("div");
-    cell.className = "day-cell";
+  for(let day=1;day<=daysInMonth;day++){
+    const cell=document.createElement("div");
+    cell.className="day-cell";
 
-    cell.innerHTML = `
+    cell.innerHTML=`
       <div class="day-number">${day}</div>
       <div class="day-meta">The ${ordinal(day)} Day of ${monthNames[currentMonth]}, Anno Domini ${styledYear}</div>
     `;
 
-    const key = `${month}-${day}`;
-    if (events[key]) {
-      events[key].forEach(ev => {
-        const pill = document.createElement("div");
-        pill.className = `event-pill ${ev.type}`;
-        pill.textContent = ev.caseName;
-        pill.onclick = () => openModal(ev, day, month);
+    const key=`${month}-${day}`;
+    if(events[key]){
+      events[key].forEach(ev=>{
+        const pill=document.createElement("div");
+        pill.className=`event-pill ${ev.type}`;
+        pill.textContent=ev.caseName;
+        pill.onclick=()=>openModal(ev,day,month);
         cell.appendChild(pill);
       });
     }
@@ -328,54 +190,55 @@ function renderCalendar(month) {
   }
 }
 
-function openModal(ev, day, month) {
-  document.getElementById("modalCaseName").textContent = ev.caseName;
-  document.getElementById("modalDate").textContent =
+function openModal(ev,day,month){
+  document.getElementById("modalCaseName").textContent=ev.caseName;
+  document.getElementById("modalDate").textContent=
     `The ${ordinal(day)} Day of ${monthNames[month]}, Anno Domini ${styledYear}`;
-  document.getElementById("modalLocation").textContent = ev.location;
-  document.getElementById("modalCauses").innerHTML = ev.causes.map(c => `• ${c}`).join("<br>");
-  document.getElementById("modalJudge").textContent = ev.judge;
-  document.getElementById("modalPapers").innerHTML = ev.papers.map(p => `• ${p}`).join("<br>");
-  document.getElementById("modalNotes").textContent = ev.notes;
+  document.getElementById("modalLocation").textContent=ev.location;
+  document.getElementById("modalCauses").innerHTML=ev.causes.map(c=>`• ${c}`).join("<br>");
+  document.getElementById("modalJudge").textContent=ev.judge;
+  document.getElementById("modalPapers").innerHTML=ev.papers.map(p=>`• ${p}`).join("<br>");
+  document.getElementById("modalNotes").textContent=ev.notes;
 
-  document.getElementById("modalBackdrop").style.display = "flex";
+  document.getElementById("modalBackdrop").style.display="flex";
 }
 
-document.getElementById("modalCloseBtn").onclick = () =>
-  document.getElementById("modalBackdrop").style.display = "none";
+document.getElementById("modalCloseBtn").onclick=()=>
+  document.getElementById("modalBackdrop").style.display="none";
 
-document.getElementById("prevMonthBtn").onclick = () => {
-  currentMonth = (currentMonth + 11) % 12;
+document.getElementById("prevMonthBtn").onclick=()=>{
+  currentMonth=(currentMonth+11)%12;
   renderCalendar(currentMonth);
 };
 
-document.getElementById("nextMonthBtn").onclick = () => {
-  currentMonth = (currentMonth + 1) % 12;
+document.getElementById("nextMonthBtn").onclick=()=>{
+  currentMonth=(currentMonth+1)%12;
   renderCalendar(currentMonth);
 };
 
-monthSelect.onchange = e => {
-  currentMonth = parseInt(e.target.value);
+monthSelect.onchange=e=>{
+  currentMonth=parseInt(e.target.value);
   renderCalendar(currentMonth);
 };
 
-document.getElementById("eventForm").onsubmit = e => {
+document.getElementById("eventForm").onsubmit=e=>{
   e.preventDefault();
 
-  const day = parseInt(document.getElementById("eventDay").value);
-  const type = document.getElementById("eventType").value;
-  const caseName = document.getElementById("eventCaseName").value;
-  const location = document.getElementById("eventLocation").value;
-  const causes = document.getElementById("eventCauses").value.split("\n").filter(x => x.trim());
-  const judge = document.getElementById("eventJudge").value;
-  const papers = document.getElementById("eventPapers").value.split("\n").filter(x => x.trim());
-  const notes = document.getElementById("eventNotes").value;
+  const day=parseInt(document.getElementById("eventDay").value);
+  const type=document.getElementById("eventType").value;
+  const caseName=document.getElementById("eventCaseName").value;
+  const location=document.getElementById("eventLocation").value;
+  const causes=document.getElementById("eventCauses").value.split("\n").filter(x=>x.trim());
+  const judge=document.getElementById("eventJudge").value;
+  const papers=document.getElementById("eventPapers").value.split("\n").filter(x=>x.trim());
+  const notes=document.getElementById("eventNotes").value;
 
-  const key = `${currentMonth}-${day}`;
-  if (!events[key]) events[key] = [];
+  const key=`${currentMonth}-${day}`;
+  if(!events[key]) events[key]=[];
 
   events[key].push({ type, caseName, location, causes, judge, papers, notes });
 
+  saveEvents();
   renderCalendar(currentMonth);
   e.target.reset();
 };
