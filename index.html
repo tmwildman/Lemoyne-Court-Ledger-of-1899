@@ -5,176 +5,158 @@
 <title>Lemoyne Deliverance Court Calendar – Anno Domini 1899</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { margin:0; padding:0; font-family:"Georgia",serif; background:#f3e7cf; color:#2b1b12; }
-  .page { max-width:960px; margin:0 auto; padding:8px; }
+/* ——— AESTHETICS PRESERVED EXACTLY ——— */
+body { margin:0; padding:0; font-family:"Georgia",serif; background:#f3e7cf; color:#2b1b12; }
+.page { max-width:960px; margin:0 auto; padding:8px; }
+.header { text-align:center; padding:8px 0; border-bottom:2px solid #5c3a24; }
+.court-title { font-size:1.2rem; text-transform:uppercase; letter-spacing:0.08em; }
+.court-subtitle { font-size:0.85rem; margin-top:4px; }
+.seal {
+  margin:6px auto; width:70px; height:70px; border-radius:50%;
+  border:2px solid #5c3a24; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle,#fdf5e6,#e4cfaa); font-size:0.65rem; text-align:center; line-height:1.1;
+}
+.controls { display:flex; flex-wrap:wrap; justify-content:space-between; margin:8px 0; }
+button, select {
+  font-family:inherit; font-size:0.8rem; padding:4px 8px;
+  border:1px solid #5c3a24; background:#fdf5e6; color:#2b1b12;
+}
+.term-banner { text-align:center; font-size:0.8rem; margin:4px 0 8px; font-style:italic; }
+.calendar-wrapper { width:100%; overflow-x:auto; }
+.calendar {
+  min-width:600px; border:2px solid #5c3a24; background:#fdf5e6;
+  box-shadow:0 0 0 3px #d3b58a;
+}
+.calendar-header-row { display:grid; grid-template-columns:repeat(7,1fr); background:#e4cfaa; }
+.calendar-header-cell { padding:4px; text-align:center; font-size:0.7rem; text-transform:uppercase; }
+.calendar-body { display:grid; grid-template-columns:repeat(7,1fr); }
+.day-cell {
+  min-height:70px; border-right:1px solid #d3b58a; border-bottom:1px solid #d3b58a;
+  padding:3px; font-size:0.7rem;
+}
+.day-cell:nth-child(7n) { border-right:none; }
+.day-number { font-weight:bold; }
+.day-meta { font-size:0.6rem; color:#6b4a32; }
+.event-pill {
+  margin-top:3px; padding:2px 3px; border-radius:3px; font-size:0.6rem;
+  border:1px solid #5c3a24; background:#f3e7cf; cursor:pointer;
+}
+.event-pill.criminal { color:#8b0000; border-color:#8b0000; }
+.event-pill.civil { color:#004b8b; border-color:#004b8b; }
+.event-pill.investigatory { color:#2f6b32; border-color:#2f6b32; }
+.event-form {
+  margin-top:10px; padding:8px; border:2px solid #5c3a24;
+  background:#fdf5e6; box-shadow:0 0 0 3px #d3b58a;
+}
+.event-form-title { font-weight:bold; margin-bottom:6px; text-transform:uppercase; }
+.event-form-row { margin-bottom:6px; }
+textarea, input, select {
+  width:100%; font-family:inherit; font-size:0.75rem;
+  padding:3px; border:1px solid #5c3a24; background:#fdf5e6;
+}
 
-  /* HEADER */
-  .header { text-align:center; padding:8px 0; border-bottom:2px solid #5c3a24; }
-  .court-title { font-size:1.2rem; text-transform:uppercase; letter-spacing:0.08em; }
-  .court-subtitle { font-size:0.85rem; margin-top:4px; }
-  .seal {
-    margin:6px auto; width:70px; height:70px; border-radius:50%;
-    border:2px solid #5c3a24; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle,#fdf5e6,#e4cfaa); font-size:0.65rem; text-align:center; line-height:1.1;
-  }
-
-  /* CONTROLS */
-  .controls { display:flex; flex-wrap:wrap; justify-content:space-between; margin:8px 0; }
-  button, select {
-    font-family:inherit; font-size:0.8rem; padding:4px 8px;
-    border:1px solid #5c3a24; background:#fdf5e6; color:#2b1b12;
-  }
-
-  .term-banner { text-align:center; font-size:0.8rem; margin:4px 0 8px; font-style:italic; }
-
-  /* CALENDAR */
-  .calendar-wrapper { width:100%; overflow-x:auto; }
-  .calendar {
-    min-width:600px; border:2px solid #5c3a24; background:#fdf5e6;
-    box-shadow:0 0 0 3px #d3b58a;
-  }
-  .calendar-header-row { display:grid; grid-template-columns:repeat(7,1fr); background:#e4cfaa; }
-  .calendar-header-cell { padding:4px; text-align:center; font-size:0.7rem; text-transform:uppercase; }
-  .calendar-body { display:grid; grid-template-columns:repeat(7,1fr); }
-  .day-cell {
-    min-height:70px; border-right:1px solid #d3b58a; border-bottom:1px solid #d3b58a;
-    padding:3px; font-size:0.7rem;
-  }
-  .day-cell:nth-child(7n) { border-right:none; }
-  .day-number { font-weight:bold; }
-  .day-meta { font-size:0.6rem; color:#6b4a32; }
-
-  /* EVENT PILLS */
-  .event-pill {
-    margin-top:3px; padding:2px 3px; border-radius:3px; font-size:0.6rem;
-    border:1px solid #5c3a24; background:#f3e7cf; cursor:pointer;
-  }
-  .event-pill.criminal { color:#8b0000; border-color:#8b0000; }
-  .event-pill.civil { color:#004b8b; border-color:#004b8b; }
-  .event-pill.investigatory { color:#2f6b32; border-color:#2f6b32; }
-
-  /* EVENT FORM */
-  .event-form {
-    margin-top:10px; padding:8px; border:2px solid #5c3a24;
-    background:#fdf5e6; box-shadow:0 0 0 3px #d3b58a;
-  }
-  .event-form-title { font-weight:bold; margin-bottom:6px; text-transform:uppercase; }
-  .event-form-row { margin-bottom:6px; }
-  textarea, input, select {
-    width:100%; font-family:inherit; font-size:0.75rem;
-    padding:3px; border:1px solid #5c3a24; background:#fdf5e6;
-  }
-
-  /* ===== ORNATE VICTORIAN DOCKET CARD ===== */
-  .modal-backdrop {
-    position:fixed; inset:0; background:rgba(0,0,0,0.45);
-    display:none; align-items:center; justify-content:center; z-index:999;
-  }
-
-  .modal {
-    max-width:520px; width:92%; background:#fdf5e6;
-    border:4px double #5c3a24;
-    box-shadow:
-      0 0 0 4px #d3b58a,
-      0 0 12px rgba(0,0,0,0.4),
-      inset 0 0 12px rgba(92,58,36,0.35);
-    padding:14px; font-family:"Georgia",serif;
-  }
-
-  .modal-header {
-    text-align:center; margin-bottom:10px; padding-bottom:6px;
-    border-bottom:2px solid #5c3a24;
-  }
-
-  .modal-title {
-    font-size:1rem; font-weight:bold; letter-spacing:0.08em; text-transform:uppercase;
-  }
-
-  .modal-date {
-    font-size:0.8rem; font-style:italic; margin-top:4px;
-  }
-
-  .modal-section-title {
-    margin-top:10px; margin-bottom:4px; font-weight:bold; font-size:0.85rem;
-    text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid #5c3a24;
-  }
-
-  /* Scrollable notes */
-  .modal-notes-box {
-    max-height:160px; overflow-y:auto; padding-right:6px; margin-top:4px;
-    font-size:0.78rem; line-height:1.25;
-    border-left:2px solid #d3b58a; border-right:2px solid #d3b58a;
-    border-top:1px solid #d3b58a; border-bottom:1px solid #d3b58a;
-    background:#fcf7e9;
-  }
-
-  .modal-close { text-align:center; margin-top:12px; }
-  .modal-close button {
-    padding:6px 12px; font-size:0.8rem;
-    border:1px solid #5c3a24; background:#e4cfaa;
-  }
+/* ——— ORNATE VICTORIAN DOCKET CARD ——— */
+.modal-backdrop {
+  position:fixed; inset:0; background:rgba(0,0,0,0.45);
+  display:none; align-items:center; justify-content:center; z-index:999;
+}
+.modal {
+  max-width:520px; width:92%; background:#fdf5e6;
+  border:4px double #5c3a24;
+  box-shadow:
+    0 0 0 4px #d3b58a,
+    0 0 12px rgba(0,0,0,0.4),
+    inset 0 0 12px rgba(92,58,36,0.35);
+  padding:14px; font-family:"Georgia",serif;
+}
+.modal-header {
+  text-align:center; margin-bottom:10px; padding-bottom:6px;
+  border-bottom:2px solid #5c3a24;
+}
+.modal-title {
+  font-size:1rem; font-weight:bold; letter-spacing:0.08em; text-transform:uppercase;
+}
+.modal-date {
+  font-size:0.8rem; font-style:italic; margin-top:4px;
+}
+.modal-section-title {
+  margin-top:10px; margin-bottom:4px; font-weight:bold; font-size:0.85rem;
+  text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid #5c3a24;
+}
+.modal-notes-box {
+  max-height:160px; overflow-y:auto; padding-right:6px; margin-top:4px;
+  font-size:0.78rem; line-height:1.25;
+  border-left:2px solid #d3b58a; border-right:2px solid #d3b58a;
+  border-top:1px solid #d3b58a; border-bottom:1px solid #d3b58a;
+  background:#fcf7e9;
+}
+.modal-close { text-align:center; margin-top:12px; }
+.modal-close button {
+  padding:6px 12px; font-size:0.8rem;
+  border:1px solid #5c3a24; background:#e4cfaa;
+}
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="court-title">The Lemoyne Deliverance Court Calendar</div>
-    <div class="court-subtitle">City of St. Denis – Anno Domini 1899</div>
-    <div class="seal">LEX<br>LEMoyNE<br>1899</div>
-  </div>
+<!-- HEADER -->
+<div class="header">
+  <div class="court-title">The Lemoyne Deliverance Court Calendar</div>
+  <div class="court-subtitle">City of St. Denis – Anno Domini 1899</div>
+  <div class="seal">LEX<br>LEMoyNE<br>1899</div>
+</div>
 
-  <!-- CONTROLS -->
-  <div class="controls">
-    <button id="prevMonthBtn">&laquo; Prior Month</button>
-    <button id="nextMonthBtn">Next Month &raquo;</button>
-    <select id="monthSelect"></select>
-  </div>
+<!-- CONTROLS -->
+<div class="controls">
+  <button id="prevMonthBtn">&laquo; Prior Month</button>
+  <button id="nextMonthBtn">Next Month &raquo;</button>
+  <select id="monthSelect"></select>
+</div>
 
-  <div class="term-banner" id="termBanner"></div>
+<div class="term-banner" id="termBanner"></div>
 
-  <!-- CALENDAR -->
-  <div class="calendar-wrapper">
-    <div class="calendar">
-      <div class="calendar-header-row">
-        <div class="calendar-header-cell">Sun</div>
-        <div class="calendar-header-cell">Mon</div>
-        <div class="calendar-header-cell">Tue</div>
-        <div class="calendar-header-cell">Wed</div>
-        <div class="calendar-header-cell">Thu</div>
-        <div class="calendar-header-cell">Fri</div>
-        <div class="calendar-header-cell">Sat</div>
-      </div>
-      <div class="calendar-body" id="calendarBody"></div>
+<!-- CALENDAR -->
+<div class="calendar-wrapper">
+  <div class="calendar">
+    <div class="calendar-header-row">
+      <div class="calendar-header-cell">Sun</div>
+      <div class="calendar-header-cell">Mon</div>
+      <div class="calendar-header-cell">Tue</div>
+      <div class="calendar-header-cell">Wed</div>
+      <div class="calendar-header-cell">Thu</div>
+      <div class="calendar-header-cell">Fri</div>
+      <div class="calendar-header-cell">Sat</div>
     </div>
+    <div class="calendar-body" id="calendarBody"></div>
   </div>
+</div>
 
-  <!-- EVENT ENTRY -->
-  <div class="event-form">
-    <div class="event-form-title">Clerk’s Entry of Court Event</div>
-    <form id="eventForm">
-      <div class="event-form-row"><label>Date (Day of Month):</label><input type="number" id="eventDay" min="1" max="31" required></div>
-      <div class="event-form-row"><label>Type:</label>
-        <select id="eventType">
-          <option value="criminal">Criminal</option>
-          <option value="civil">Civil</option>
-          <option value="investigatory">Investigatory</option>
-        </select>
-      </div>
-      <div class="event-form-row"><label>Case Name:</label><input type="text" id="eventCaseName" required></div>
-      <div class="event-form-row"><label>Location:</label><input type="text" id="eventLocation" value="Deliverance Court, St. Denis"></div>
-      <div class="event-form-row"><label>Causes (one per line):</label><textarea id="eventCauses"></textarea></div>
-      <div class="event-form-row"><label>Presiding Officer:</label><input type="text" id="eventJudge"></div>
-      <div class="event-form-row"><label>Papers (one per line):</label><textarea id="eventPapers"></textarea></div>
-      <div class="event-form-row"><label>Notes:</label><textarea id="eventNotes"></textarea></div>
-      <button type="submit">Enter Event</button>
-    </form>
-  </div>
+<!-- EVENT ENTRY -->
+<div class="event-form">
+  <div class="event-form-title">Clerk’s Entry of Court Event</div>
+  <form id="eventForm">
+    <div class="event-form-row"><label>Date (Day of Month):</label><input type="number" id="eventDay" min="1" max="31" required></div>
+    <div class="event-form-row"><label>Type:</label>
+      <select id="eventType">
+        <option value="criminal">Criminal</option>
+        <option value="civil">Civil</option>
+        <option value="investigatory">Investigatory</option>
+      </select>
+    </div>
+    <div class="event-form-row"><label>Case Name:</label><input type="text" id="eventCaseName" required></div>
+    <div class="event-form-row"><label>Location:</label><input type="text" id="eventLocation" value="Deliverance Court, St. Denis"></div>
+    <div class="event-form-row"><label>Causes (one per line):</label><textarea id="eventCauses"></textarea></div>
+    <div class="event-form-row"><label>Presiding Officer:</label><input type="text" id="eventJudge"></div>
+    <div class="event-form-row"><label>Papers (one per line):</label><textarea id="eventPapers"></textarea></div>
+    <div class="event-form-row"><label>Notes:</label><textarea id="eventNotes"></textarea></div>
+    <button type="submit">Enter Event</button>
+  </form>
+</div>
 
 </div>
 
-<!-- ORNATE VICTORIAN DOCKET CARD -->
+<!-- DOCKET CARD -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal">
     <div class="modal-header">
@@ -209,16 +191,24 @@
 const realYear = new Date().getFullYear();
 const styledYear = 1899;
 
-/* LOAD EVENTS FROM LOCALSTORAGE */
-let events;
+/* SAFE LOCALSTORAGE LOADER */
+let events = {};
 try {
-  events = JSON.parse(localStorage.getItem("lemoyneEvents") || "{}");
+  const raw = localStorage.getItem("lemoyneEvents");
+  if (raw) {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      events = parsed;
+    }
+  }
 } catch (e) {
   events = {};
 }
-function saveEvents() { localStorage.setItem("lemoyneEvents", JSON.stringify(events)); }
 
-/* STATE */
+function saveEvents() {
+  localStorage.setItem("lemoyneEvents", JSON.stringify(events));
+}
+
 let currentMonth = new Date().getMonth();
 
 const monthNames = [
