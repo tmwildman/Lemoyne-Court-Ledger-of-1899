@@ -16,35 +16,37 @@
   .page {
     max-width: 960px;
     margin: 0 auto;
-    padding: 12px;
+    padding: 8px;
   }
 
   /* ===== HEADER ===== */
   .header {
     text-align: center;
-    padding: 12px 0;
+    padding: 8px 0;
     border-bottom: 2px solid #5c3a24;
   }
   .court-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
   .court-subtitle {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-top: 4px;
   }
   .seal {
-    margin: 8px auto;
-    width: 80px;
-    height: 80px;
+    margin: 6px auto;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 2px solid #5c3a24;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     background: radial-gradient(circle, #fdf5e6 0%, #e4cfaa 70%);
+    text-align: center;
+    line-height: 1.1;
   }
 
   /* ===== CONTROLS ===== */
@@ -53,7 +55,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0 6px;
+    margin: 8px 0 6px;
     gap: 6px;
   }
   .controls-left, .controls-right {
@@ -84,16 +86,23 @@
 
   .term-banner {
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin: 4px 0 8px;
     font-style: italic;
   }
 
+  /* ===== CALENDAR WRAPPER (RESPONSIVE) ===== */
+  .calendar-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   /* ===== CALENDAR GRID ===== */
   .calendar {
+    min-width: 600px; /* ensures grid fits but scrolls if needed */
     border: 2px solid #5c3a24;
     background: #fdf5e6;
-    box-shadow: 0 0 0 4px #d3b58a;
+    box-shadow: 0 0 0 3px #d3b58a;
   }
   .calendar-header-row {
     display: grid;
@@ -102,9 +111,9 @@
     background: #e4cfaa;
   }
   .calendar-header-cell {
-    padding: 6px 2px;
+    padding: 4px 2px;
     text-align: center;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -116,10 +125,10 @@
     min-height: 70px;
     border-right: 1px solid #d3b58a;
     border-bottom: 1px solid #d3b58a;
-    padding: 4px;
+    padding: 3px;
     box-sizing: border-box;
     position: relative;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
   .day-cell:nth-child(7n) {
     border-right: none;
@@ -129,17 +138,18 @@
     margin-bottom: 2px;
   }
   .day-meta {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: #6b4a32;
   }
   .event-pill {
     margin-top: 3px;
     padding: 2px 3px;
     border-radius: 3px;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     cursor: pointer;
     border: 1px solid #5c3a24;
     background: #f3e7cf;
+    display: block;
   }
   .event-pill.criminal { border-color: #8b0000; color: #8b0000; }
   .event-pill.civil    { border-color: #004b8b; color: #004b8b; }
@@ -147,6 +157,46 @@
 
   .empty {
     background: #f8f0dd;
+  }
+
+  /* ===== EVENT ENTRY FORM ===== */
+  .event-form {
+    margin-top: 10px;
+    padding: 8px;
+    border: 2px solid #5c3a24;
+    background: #fdf5e6;
+    box-shadow: 0 0 0 3px #d3b58a;
+    font-size: 0.8rem;
+  }
+  .event-form-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .event-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .event-form-row label {
+    font-size: 0.75rem;
+  }
+  .event-form-row input,
+  .event-form-row select,
+  .event-form-row textarea {
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 3px 4px;
+    border: 1px solid #5c3a24;
+    background: #fdf5e6;
+    color: #2b1b12;
+  }
+  .event-form-row textarea {
+    width: 100%;
+    min-height: 40px;
+    resize: vertical;
   }
 
   /* ===== FOOTER ===== */
@@ -172,8 +222,8 @@
     width: 90%;
     background: #fdf5e6;
     border: 2px solid #5c3a24;
-    box-shadow: 0 0 0 4px #d3b58a;
-    padding: 10px;
+    box-shadow: 0 0 0 3px #d3b58a;
+    padding: 8px;
     font-size: 0.8rem;
   }
   .modal-header {
@@ -222,17 +272,79 @@
   <div class="term-banner" id="termBanner"></div>
 
   <!-- CALENDAR -->
-  <div class="calendar">
-    <div class="calendar-header-row">
-      <div class="calendar-header-cell">Sunday</div>
-      <div class="calendar-header-cell">Monday</div>
-      <div class="calendar-header-cell">Tuesday</div>
-      <div class="calendar-header-cell">Wednesday</div>
-      <div class="calendar-header-cell">Thursday</div>
-      <div class="calendar-header-cell">Friday</div>
-      <div class="calendar-header-cell">Saturday</div>
+  <div class="calendar-wrapper">
+    <div class="calendar">
+      <div class="calendar-header-row">
+        <div class="calendar-header-cell">Sunday</div>
+        <div class="calendar-header-cell">Monday</div>
+        <div class="calendar-header-cell">Tuesday</div>
+        <div class="calendar-header-cell">Wednesday</div>
+        <div class="calendar-header-cell">Thursday</div>
+        <div class="calendar-header-cell">Friday</div>
+        <div class="calendar-header-cell">Saturday</div>
+      </div>
+      <div class="calendar-body" id="calendarBody"></div>
     </div>
-    <div class="calendar-body" id="calendarBody"></div>
+  </div>
+
+  <!-- EVENT ENTRY FORM -->
+  <div class="event-form">
+    <div class="event-form-title">Clerk’s Entry of Court Event</div>
+    <form id="eventForm">
+      <div class="event-form-row">
+        <label>
+          Date (Day of Current Month):
+          <input type="number" id="eventDay" min="1" max="31" required>
+        </label>
+        <label>
+          Type:
+          <select id="eventType">
+            <option value="criminal">Criminal</option>
+            <option value="civil">Civil</option>
+            <option value="investigatory">Investigatory</option>
+          </select>
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Case Name:
+          <input type="text" id="eventCaseName" placeholder="The State of Lemoyne v. ..." required style="width:100%;">
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Location:
+          <input type="text" id="eventLocation" value="Deliverance Court, City of St. Denis, Lemoyne" style="width:100%;">
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Causes of Action (one per line):
+          <textarea id="eventCauses" placeholder="P.C. 308 – Armed Robbery&#10;P.C. 410 – Discharge of Firearms within City Limits"></textarea>
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Presiding Officer:
+          <input type="text" id="eventJudge" placeholder="Hon. Silas Beauregard, Judge of the Deliverance Court" style="width:100%;">
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Required Papers (one per line):
+          <textarea id="eventPapers" placeholder="Motion to Continue&#10;Affidavit of Deputy Witness"></textarea>
+        </label>
+      </div>
+      <div class="event-form-row">
+        <label style="flex:1 1 100%;">
+          Notes:
+          <textarea id="eventNotes" placeholder="Clerk’s notation, scheduling remarks, etc."></textarea>
+        </label>
+      </div>
+      <div class="event-form-row" style="justify-content:flex-end;">
+        <button type="submit">Enter Event to Calendar</button>
+      </div>
+    </form>
   </div>
 
   <div class="footer">
@@ -270,7 +382,7 @@
 </div>
 
 <script>
-  // ===== CONFIG: TERMS & SAMPLE EVENTS =====
+  // ===== CONFIG: TERMS =====
   const terms = [
     { months: [0,1,2], name: "Hilary Term – First Sitting of the Deliverance Bench" },
     { months: [3,4,5], name: "Easter Term – Spring Assizes of Lemoyne" },
@@ -278,58 +390,9 @@
     { months: [9,10,11], name: "Michaelmas Term – Winter Assizes and Final Sentencings" }
   ];
 
-  // Example events – you can expand this as needed
+  // ===== EVENTS STORE =====
   // key: "month-day" (month 0–11, day 1–31)
-  const events = {
-    "0-5": [{
-      type: "criminal",
-      caseName: "The State of Lemoyne v. John Marston",
-      location: "Deliverance Court, City of St. Denis, Lemoyne",
-      causes: [
-        "P.C. 308 – Armed Robbery of a Conveyance",
-        "P.C. 410 – Discharge of Firearms within City Limits"
-      ],
-      judge: "Hon. Silas Beauregard, Judge of the Deliverance Court",
-      papers: [
-        "Motion to Continue",
-        "Affidavit of Deputy Witness",
-        "Writ of Production of the Accused"
-      ],
-      notes: "Arraignment and setting of trial date; clerk to notify attorney of record."
-    }],
-    "0-12": [{
-      type: "civil",
-      caseName: "Van der Linde v. Cornwall Freight & Shipping",
-      location: "Deliverance Court, City of St. Denis, Lemoyne",
-      causes: [
-        "Civil Trespass upon Rail Property",
-        "Conversion of Goods and Chattels"
-      ],
-      judge: "Hon. Abigail Monroe, Judge of the Deliverance Court",
-      papers: [
-        "Bill of Complaint",
-        "Affidavit of Damages",
-        "Summons to Cornwall Freight & Shipping"
-      ],
-      notes: "Initial filing; clerk to assign docket number and serve summons."
-    }],
-    "1-3": [{
-      type: "investigatory",
-      caseName: "In re Investigation of Rhodes Jail Disturbance",
-      location: "Office of the County Solicitor, Rhodes, Lemoyne",
-      causes: [
-        "P.C. 309 – Disturbance of the Peace",
-        "P.C. 411 – Destruction of Public Property"
-      ],
-      judge: "County Solicitor’s Office (Preliminary Inquiry)",
-      papers: [
-        "Report of Deputy Sheriff",
-        "Statement of Jailor",
-        "Inventory of Damaged Property"
-      ],
-      notes: "Preliminary investigatory session; no formal charges yet preferred."
-    }]
-  };
+  const events = {};
 
   // ===== STATE =====
   let currentMonth = (new Date()).getMonth(); // align with real month
@@ -337,12 +400,13 @@
   const monthSelect = document.getElementById("monthSelect");
   const termBanner = document.getElementById("termBanner");
 
-  // ===== INIT MONTH SELECT =====
   const monthNames = [
     "January 1899", "February 1899", "March 1899", "April 1899",
     "May 1899", "June 1899", "July 1899", "August 1899",
     "September 1899", "October 1899", "November 1899", "December 1899"
   ];
+
+  // ===== INIT MONTH SELECT =====
   monthNames.forEach((name, idx) => {
     const opt = document.createElement("option");
     opt.value = idx;
@@ -422,11 +486,11 @@
   function openModal(ev, day, month) {
     modalCaseName.textContent = ev.caseName;
     modalDate.textContent = `The ${ordinal(day)} Day of ${monthNames[month].split(" ")[0]}, Anno Domini 1899`;
-    modalLocation.textContent = ev.location;
-    modalCauses.innerHTML = ev.causes.map(c => `• ${c}`).join("<br>");
-    modalJudge.textContent = ev.judge;
-    modalPapers.innerHTML = ev.papers.map(p => `• ${p}`).join("<br>");
-    modalNotes.textContent = ev.notes;
+    modalLocation.textContent = ev.location || "";
+    modalCauses.innerHTML = (ev.causes || []).map(c => `• ${c}`).join("<br>");
+    modalJudge.textContent = ev.judge || "";
+    modalPapers.innerHTML = (ev.papers || []).map(p => `• ${p}`).join("<br>");
+    modalNotes.textContent = ev.notes || "";
     modalBackdrop.style.display = "flex";
   }
 
@@ -451,6 +515,57 @@
   monthSelect.addEventListener("change", (e) => {
     currentMonth = parseInt(e.target.value, 10);
     renderCalendar(currentMonth);
+  });
+
+  // ===== EVENT FORM LOGIC =====
+  const eventForm = document.getElementById("eventForm");
+  const eventDayInput = document.getElementById("eventDay");
+  const eventTypeInput = document.getElementById("eventType");
+  const eventCaseNameInput = document.getElementById("eventCaseName");
+  const eventLocationInput = document.getElementById("eventLocation");
+  const eventCausesInput = document.getElementById("eventCauses");
+  const eventJudgeInput = document.getElementById("eventJudge");
+  const eventPapersInput = document.getElementById("eventPapers");
+  const eventNotesInput = document.getElementById("eventNotes");
+
+  eventForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const day = parseInt(eventDayInput.value, 10);
+    if (isNaN(day) || day < 1 || day > 31) {
+      alert("Enter a valid day of the month.");
+      return;
+    }
+
+    const key = `${currentMonth}-${day}`;
+    if (!events[key]) events[key] = [];
+
+    const causes = eventCausesInput.value
+      .split("\n")
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    const papers = eventPapersInput.value
+      .split("\n")
+      .map(s => s.trim())
+      .filter(s => s.length > 0);
+
+    const ev = {
+      type: eventTypeInput.value,
+      caseName: eventCaseNameInput.value.trim(),
+      location: eventLocationInput.value.trim(),
+      causes,
+      judge: eventJudgeInput.value.trim(),
+      papers,
+      notes: eventNotesInput.value.trim()
+    };
+
+    events[key].push(ev);
+
+    // Re-render calendar to show new event
+    renderCalendar(currentMonth);
+
+    // Optional: clear form
+    eventForm.reset();
   });
 
   // ===== INITIAL RENDER =====
